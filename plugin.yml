@@ -1,11 +1,11 @@
 name: GlobalToast
-main: SVega9848\GlobalToast\Core\Main
-version: 0.1.0
+main: SVega9848\GlobalToast\Main
+version: 0.2.0
 api: 4.0.0
-author: SVega
+authors: [SVega, BlusteryS]
 description: Broadcast toast announcements to everyone in the server!
 
 permissions:
-  globaltoast.cmd:
+  globaltoast.use:
     description: Broadcast toast announcements to everyone in the server!
     default: op
