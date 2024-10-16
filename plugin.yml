@@ -1,7 +1,7 @@
 name: GlobalToast
 main: SVega9848\GlobalToast\Core\Main
 version: 0.1.0
-api: 4.0.0
+api: 5.0.0
 author: SVega
 description: Broadcast toast announcements to everyone in the server!
 
