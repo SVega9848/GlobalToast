@@ -11,17 +11,20 @@ use pocketmine\plugin\PluginOwned;
 use pocketmine\utils\TextFormat;
 use SVega9848\GlobalToast\Core\Main;
 
-class GlobalToastCommand extends Command implements PluginOwned {
+class GlobalToastCommand extends Command implements PluginOwned
+{
 
     private Main $main;
 
-    public function __construct(Main $main) {
+    public function __construct(Main $main)
+    {
         parent::__construct("globaltoast", "Broadcast toast announcements to everyone in the server!");
         $this->main = $main;
         $this->setPermission("globaltoast.use");
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
+    public function execute(CommandSender $sender, string $commandLabel, array $args): bool
+    {
         if (!$this->testPermission($sender)) {
             return true;
         }
@@ -54,16 +57,20 @@ class GlobalToastCommand extends Command implements PluginOwned {
             return true;
         }
 
-        $packet = new ToastRequestPacket();
-        $packet->title = TextFormat::colorize($this->main->getConfig()->get("toast-title"));
-        $packet->subtitle = TextFormat::colorize($message);
+
 
         if ($targetPlayer === "everyone") {
             foreach ($this->main->getServer()->getOnlinePlayers() as $player) {
-                $player->getNetworkSession()->sendDataPacket(clone $packet);
+                $player->sendToastNotification(
+                    TextFormat::colorize($this->main->getConfig()->get("toast-title")),
+                    TextFormat::colorize($message)
+                );
             }
         } else {
-            $targetPlayer->getNetworkSession()->sendDataPacket($packet);
+            $targetPlayer->sendToastNotification(
+                TextFormat::colorize($this->main->getConfig()->get("toast-title")),
+                TextFormat::colorize($message)
+            );
         }
 
         $sender->sendMessage(TextFormat::colorize("&7[&a!&7] &aToast has been sent."));
@@ -71,7 +78,8 @@ class GlobalToastCommand extends Command implements PluginOwned {
         return true;
     }
 
-    public function getOwningPlugin(): Plugin {
+    public function getOwningPlugin(): Plugin
+    {
         return $this->main;
     }
 }
